@@ -23,14 +23,14 @@ namespace DatingApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
-            return await _context.AppUser.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUser(int id)
         {
-            var appUser = await _context.AppUser.FindAsync(id);
+            var appUser = await _context.Users.FindAsync(id);
 
             if (appUser == null)
             {
