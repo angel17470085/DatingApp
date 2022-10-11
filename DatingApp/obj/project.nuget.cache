@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "sf4fask2cjn6tn4VfRImgbr0MMwnzHzR1vIxjt1VZt76ophxzUFYNA7rHDZMZbyuPAS7eLU7ZR6Ee6hjhEh3dA==",
+  "dgSpecHash": "IgfJPJdufegiOMzHDNw3kiPuotR7tu7nq64gft4IwlsKOcPVV8fbj1ArC8JO0K8Sd/5VXMIu0lyq6o2Tyiq30A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Anheru\\source\\repos\\DatingApp\\DatingApp\\DatingApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Anheru\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Anheru\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.7\\microsoft.aspnetcore.authentication.jwtbearer.3.1.7.nupkg.sha512",
     "C:\\Users\\Anheru\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Anheru\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\Anheru\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\5.0.0\\microsoft.aspnetcore.razor.language.5.0.0.nupkg.sha512",

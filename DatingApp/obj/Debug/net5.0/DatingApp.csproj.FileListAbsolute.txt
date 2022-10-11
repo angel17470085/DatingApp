@@ -132,3 +132,4 @@ C:\Users\Anheru\source\repos\DatingApp\DatingApp\obj\Debug\net5.0\refint\DatingA
 C:\Users\Anheru\source\repos\DatingApp\DatingApp\obj\Debug\net5.0\DatingApp.pdb
 C:\Users\Anheru\source\repos\DatingApp\DatingApp\obj\Debug\net5.0\DatingApp.genruntimeconfig.cache
 C:\Users\Anheru\source\repos\DatingApp\DatingApp\obj\Debug\net5.0\ref\DatingApp.dll
+C:\Users\Anheru\source\repos\DatingApp\DatingApp\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
