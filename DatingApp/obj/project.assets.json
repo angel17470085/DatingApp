@@ -7679,11 +7679,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Anheru\\source\\repos\\DatingApp\\DatingApp\\DatingApp.csproj",
+      "projectUniqueName": "C:\\Users\\Anheru\\source\\repos\\ApiProjects\\DatingApp\\DatingApp\\DatingApp.csproj",
       "projectName": "DatingApp",
-      "projectPath": "C:\\Users\\Anheru\\source\\repos\\DatingApp\\DatingApp\\DatingApp.csproj",
+      "projectPath": "C:\\Users\\Anheru\\source\\repos\\ApiProjects\\DatingApp\\DatingApp\\DatingApp.csproj",
       "packagesPath": "C:\\Users\\Anheru\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Anheru\\source\\repos\\DatingApp\\DatingApp\\obj\\",
+      "outputPath": "C:\\Users\\Anheru\\source\\repos\\ApiProjects\\DatingApp\\DatingApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Anheru\\AppData\\Roaming\\NuGet\\NuGet.Config",

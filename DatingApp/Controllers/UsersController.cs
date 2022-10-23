@@ -41,8 +41,5 @@ namespace DatingApp.Controllers
 
             return appUser;
         }
-
-       
-
     }
 }
