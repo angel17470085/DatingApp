@@ -12,7 +12,7 @@ export interface Member {
     gender:       string;
     introduction: string;
     lookingFor:   string;
-    interest:     null;
+    interests:     null;
     city:         string;
     country:      string;
     photos:       Photo[];
