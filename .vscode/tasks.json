@@ -36,6 +36,19 @@
                 "${workspaceFolder}/API/API.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "angular debug task",
+            "command" : "ng s --host=127.0.0.1" ,
+            "type": "shell",
+            "problemMatcher": [],
+            "group":{
+                "kind": "build",
+                "isDefault": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/client"
+            }
         }
     ]
 }
