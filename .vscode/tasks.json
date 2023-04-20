@@ -39,10 +39,10 @@
         },
         {
             "label": "angular debug task",
-            "command" : "ng s --host=127.0.0.1" ,
+            "command": "ng s --host=127.0.0.1",
             "type": "shell",
             "problemMatcher": [],
-            "group":{
+            "group": {
                 "kind": "build",
                 "isDefault": false
             },
