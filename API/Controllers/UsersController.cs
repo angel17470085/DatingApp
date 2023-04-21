@@ -1,3 +1,4 @@
+using System;
 using System.Reflection.Metadata;
 using System.Security.Claims;
 using API.Data;
@@ -94,7 +95,11 @@ namespace API.Controllers
             
             user.Photos.Add(photo);
 
-            if (await _userRepository.SaveAllAsync()) return _mapper.Map<PhotoDto>(photo);
+            if (await _userRepository.SaveAllAsync()) 
+            {
+                return CreatedAtAction("GetUser",
+                 new{username = user.UserName}, _mapper.Map<PhotoDto>(photo));
+            }
           
             return BadRequest("Problem adding photo"); 
         }
