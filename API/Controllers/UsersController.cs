@@ -138,7 +138,7 @@ namespace API.Controllers
                 return BadRequest("Problem setting the main photo");
         }
 
-        [HttpDelete("delte-photo/{photoId}")]
+        [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto (int photoId) 
         { 
             var user = await _userRepository.GetUserByUserNameAsync(User.GetUsername());
@@ -156,7 +156,7 @@ namespace API.Controllers
             {
                 //delete the photos from cloudinary
                 var result = await _photoService.DeletePhotoAsync(photo.PublicId);
-                if (result != null) return BadRequest(result.Error.Message);
+                if (result.Error != null) return BadRequest(result.Error.Message);
             }
             //PublicId is equal to null, it means that the photo is in the Db.
             user.Photos.Remove(photo);
