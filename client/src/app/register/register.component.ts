@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
 
   initializeForm() {
     this.registerForm = new FormGroup({
-      username : new FormControl("hello",Validators.required),
+      username : new FormControl("",Validators.required),
       password: new FormControl("", [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
       confirmPassword: new FormControl("", [Validators.required, this.matchValues("password")]),
     });
@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
 
   matchValues(matchTo : string): ValidatorFn {
     return (control : AbstractControl) => {
-      return control.value === control.parent?.get(matchTo)?.value ? null : {notMaching : true}
+      return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching : true}
     }
   }
   register() {
