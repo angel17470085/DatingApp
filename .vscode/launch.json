@@ -29,7 +29,7 @@
 
         {
             "name":  "Angular debug",
-            "type" : "chrome",
+            "type" : "msedge",
             "request": "launch",
             "url": "https://localhost:4200",
             "webRoot": "${workspaceFolder}/client"

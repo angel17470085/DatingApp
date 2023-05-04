@@ -20,21 +20,21 @@ export class MembersService {
   getMembers (userParams : UserParams) {
     let params = this.getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
     
-    params.append("minAge",userParams.minAge);
-    params.append("maxAge",userParams.maxAge);
-    params.append("gender",userParams.gender);
+    params = params.append('minAge',userParams.minAge);
+    params = params.append('maxAge',userParams.maxAge);
+    params = params.append('gender',userParams.gender);
     
-    return this.getPaginatedResult<Member[]>(this.baseUrl+ "users", params)
+    return this.getPaginatedResult<Member[]>(this.baseUrl+ 'users', params)
   }
 
   private getPaginatedResult<T>(url: string , params: HttpParams) {
     const paginatedResult : PaginatedResult<T> = new PaginatedResult<T>;
-    return this.http.get<T>(url, { observe: "response", params }).pipe(
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
       map(response => {
         if (response.body) {
           paginatedResult.result = response.body;
         }
-        const pagination = response.headers.get("Pagination");
+        const pagination = response.headers.get('Pagination');
         if (pagination) {
           paginatedResult.pagination = JSON.parse(pagination);
         }
