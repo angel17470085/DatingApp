@@ -58,7 +58,6 @@ namespace API.Data
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
-
             return user;
         }
 
