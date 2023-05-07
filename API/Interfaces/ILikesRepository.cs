@@ -8,7 +8,7 @@ using API.Entities;
 
 namespace API.Interfaces
 {
-    public interface ILikeRepository
+    public interface ILikesRepository
     {
         Task<UserLike> GetUserLike(int sourceUserId, int targetUserId);
         

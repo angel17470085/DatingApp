@@ -11,7 +11,7 @@ using SQLitePCL;
 
 namespace API.Data
 {
-    public class LikesRepository : ILikeRepository
+    public class LikesRepository : ILikesRepository
      {
         private readonly DataContext _context;
         public LikesRepository(DataContext context)
