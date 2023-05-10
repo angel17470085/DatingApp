@@ -15,8 +15,7 @@ namespace API.DTOs
         public string SenderUsername {get; set;}
 
         public string SenderPhotoUrl{get; set;}
-
-
+        
 
         public int RecipientId {get; set;}
 

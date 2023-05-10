@@ -19,6 +19,7 @@ namespace API.Data
             _context = context;
             
         }
+        
         public void AddMessage(Message message)
         {
             _context.Messages.Add(message);
@@ -49,4 +50,6 @@ namespace API.Data
             return await _context.SaveChangesAsync() > 0;
         }
     }
+
+    
 }
