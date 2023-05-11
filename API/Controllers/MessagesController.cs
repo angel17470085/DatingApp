@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using API.DTOs;
 using API.Extensions;
 using API.Entities;
-
+using API.Helpers;
 namespace API.Controllers
 {
 
@@ -54,6 +54,26 @@ namespace API.Controllers
             return BadRequest("failed to send message");
              
 
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult<PagedList<MessageDto>>> GetMessageForUser([FromQuery] MessageParams messageParams) 
+        {
+            messageParams.Username = User.GetUsername();
+
+            var messages = await _messageRepository.GetMessageForUser(messageParams);
+
+            Response.AddPaginationHeader(
+                new PaginationHeader(
+                    messages.CurrentPage,
+                    messages.PageSize,
+                    messages.TotalCount,
+                    messages.TotalPages
+                )
+            );
+
+            return messages;
         }
     }
 }

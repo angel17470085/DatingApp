@@ -6,6 +6,8 @@ using API.DTOs;
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -13,9 +15,11 @@ namespace API.Data
     public class MessageRepository : IMessageRepository
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public MessageRepository(DataContext context)
+        public MessageRepository(DataContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
             
         }
@@ -38,6 +42,24 @@ namespace API.Data
         public Task<PagedList<MessageDto>> GetMessageForUser()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<PagedList<MessageDto>> GetMessageForUser(MessageParams messageParams)
+        {
+            var query = _context.Messages.OrderByDescending(x => x.MessageSent)
+                .AsQueryable();
+
+                query = messageParams.Container switch 
+                {
+                    "Inbox" => query.Where(u => u.RecipientUserName == messageParams.Username),
+                    "Outbox" => query.Where(u => u.SenderUsername == messageParams.Username),
+                    _ => query.Where(u => u.RecipientUserName == messageParams.Username && u.DateRead == null)
+                };
+
+                var messages = query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider);
+
+                return await PagedList<MessageDto>.CreateAsync(messages,messageParams.PageNumber, messageParams.PageSize);
+
         }
 
         public Task<IEnumerable<MessageDto>> GetMessageThread(int currentUserId, int recipientId)
