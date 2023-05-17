@@ -51,9 +51,9 @@ namespace API.Data
 
                 query = messageParams.Container switch 
                 {
-                    "Inbox" => query.Where(u => u.RecipientUserName == messageParams.Username),
-                    "Outbox" => query.Where(u => u.SenderUsername == messageParams.Username),
-                    _ => query.Where(u => u.RecipientUserName == messageParams.Username && u.DateRead == null)
+                    "Inbox" => query.Where(u => u.RecipientUserName == messageParams.Username && u.RecipientDeleted == false),
+                    "Outbox" => query.Where(u => u.SenderUsername == messageParams.Username && u.SenderDeleted == false),
+                    _ => query.Where(u => u.RecipientUserName == messageParams.Username && u.RecipientDeleted == false && u.DateRead == null)
                 };
 
                 var messages = query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider);
@@ -68,9 +68,9 @@ namespace API.Data
             .Include(u => u.Sender).ThenInclude(p => p.Photos)
             .Include(u => u.Recipient).ThenInclude(p => p.Photos)
             .Where(
-                m => m.RecipientUserName == currentUsername &&
+                m => m.RecipientUserName == currentUsername && m.RecipientDeleted == false &&
                 m.SenderUsername == recipientUsername || 
-                m.RecipientUserName == recipientUsername &&
+                m.RecipientUserName == recipientUsername && m.SenderDeleted == false &&
                 m.SenderUsername == currentUsername
             )
             .OrderBy(m => m.MessageSent)
