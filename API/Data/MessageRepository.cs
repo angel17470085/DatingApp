@@ -23,7 +23,8 @@ namespace API.Data
             _context = context;
             
         }
-        
+
+       
         public void AddMessage(Message message)
         {
             _context.Messages.Add(message);
@@ -34,15 +35,29 @@ namespace API.Data
             _context.Messages.Remove(message); 
         }
 
+         public void AddGroup(Group group)
+        {
+           _context.Groups.Add(group);
+        }
+
+        public async Task<Connection> GetConnection(string connectionId)
+        {
+            return await _context.Connections.FindAsync(connectionId);
+
+            
+        }
+
         public async Task<Message> GetMessage(int id)
         {
             return await _context.Messages.FindAsync(id);
         }
-
-        public Task<PagedList<MessageDto>> GetMessageForUser()
+          public async Task<Group> GetMessageGroup(string groupName)
         {
-            throw new NotImplementedException();
+            return await _context.Groups
+            .Include(X => X.Connections)
+            .FirstOrDefaultAsync(g => g.Name == groupName);
         }
+
 
         public async Task<PagedList<MessageDto>> GetMessageForUser(MessageParams messageParams)
         {
@@ -61,6 +76,8 @@ namespace API.Data
                 return await PagedList<MessageDto>.CreateAsync(messages,messageParams.PageNumber, messageParams.PageSize);
 
         }
+
+      
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername , string recipientUsername)
         {
@@ -90,6 +107,11 @@ namespace API.Data
             
             return _mapper.Map<IEnumerable<MessageDto>>(messages);
 
+        }
+
+        public void RemoveConnection(Connection connection)
+        {
+            _context.Connections.Remove(connection);
         }
 
         public async Task<bool> SaveAllAsync()
