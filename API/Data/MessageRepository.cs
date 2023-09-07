@@ -118,6 +118,16 @@ namespace API.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<Group> GetGroupForConnection(string connectionId)
+        {
+            return await _context.Groups
+                .Include(x => x.Connections)
+                .Where(g => g.Connections.Any(c => c.ConnectionId == connectionId))
+                .FirstOrDefaultAsync();
+
+
+        }
     }
 
     
