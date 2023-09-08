@@ -17,14 +17,14 @@ namespace API.Controllers
     [Authorize]
     public class UsersController : BaseApiController
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
         private readonly IPhotoService _photoService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper , IPhotoService photoService )
+        public UsersController(IUnitOfWork uow, IMapper mapper , IPhotoService photoService )
         {
             _photoService = photoService;
-            _userRepository = userRepository;
+            _uow = uow;
             _mapper = mapper;
         }
 
@@ -32,13 +32,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            var currentUser = await _userRepository.GetUserByUserNameAsync(User.GetUsername());
-            userParams.CurrentUserName = currentUser.UserName;
+            var gender = await _uow.UserRepository.GetUserGender(User.GetUsername());
+            userParams.CurrentUserName = User.GetUsername();
             if (string.IsNullOrEmpty(userParams.Gender))
             {
-                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+                userParams.Gender = gender == "male" ? "female" : "male";
             }
-            var users = await _userRepository.GetMembersAsync(userParams);
+            var users = await _uow.UserRepository.GetMembersAsync(userParams);
 
             Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));
             
@@ -48,7 +48,7 @@ namespace API.Controllers
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-           var user = await _userRepository.GetMemberAsync(username);
+           var user = await _uow.UserRepository.GetMemberAsync(username);
 
             return  Ok(user); 
 
@@ -60,7 +60,7 @@ namespace API.Controllers
         {
             var username = User.GetUsername();
             
-            var user = await  _userRepository.GetUserByUserNameAsync(username);
+            var user = await  _uow.UserRepository.GetUserByUserNameAsync(username);
 
             if(user == null)
             {
@@ -69,7 +69,7 @@ namespace API.Controllers
 
             _mapper.Map(updateMemberDto,user);
 
-            if (await _userRepository.SaveAllAsync())
+            if (await _uow.Complete())
             {
                 return NoContent();
             } 
@@ -81,7 +81,7 @@ namespace API.Controllers
         [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto ( IFormFile file) 
         { 
-            var user = await _userRepository.GetUserByUserNameAsync(User.GetUsername());
+            var user = await _uow.UserRepository.GetUserByUserNameAsync(User.GetUsername());
 
             if (user == null) 
             {
@@ -104,7 +104,7 @@ namespace API.Controllers
             
             user.Photos.Add(photo);
 
-            if (await _userRepository.SaveAllAsync()) 
+            if (await _uow.Complete()) 
             {
                 return CreatedAtAction("GetUser",
                  new{username = user.UserName}, _mapper.Map<PhotoDto>(photo));
@@ -116,7 +116,7 @@ namespace API.Controllers
         [HttpPut("set-main-photo/{photoId}")]
                public async Task<ActionResult> SetMainPhoto (int photoId) 
         {
-            var user = await _userRepository.GetUserByUserNameAsync(User.GetUsername());
+            var user = await _uow.UserRepository.GetUserByUserNameAsync(User.GetUsername());
 
             var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
 
@@ -139,7 +139,7 @@ namespace API.Controllers
 
                 photo.IsMain = true;
 
-                if (await _userRepository.SaveAllAsync())
+                if (await _uow.Complete())
                 {
                     return  NoContent();
                 }
@@ -150,7 +150,7 @@ namespace API.Controllers
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto (int photoId) 
         { 
-            var user = await _userRepository.GetUserByUserNameAsync(User.GetUsername());
+            var user = await _uow.UserRepository.GetUserByUserNameAsync(User.GetUsername());
 
             var photo = user.Photos.FirstOrDefault(p => p.Id == photoId);
 
@@ -170,7 +170,7 @@ namespace API.Controllers
             //PublicId is equal to null, it means that the photo is in the Db.
             user.Photos.Remove(photo);
 
-            if (await _userRepository.SaveAllAsync()) return Ok();
+            if (await _uow.Complete()) return Ok();
 
             return BadRequest ("Problem deleting photo");
         }
