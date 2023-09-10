@@ -18,7 +18,7 @@ namespace API.Entities
 
         public int RecipientId {get; set;}
 
-        public string RecipientUserName {get; set;}
+        public string RecipientUsername {get; set;}
 
         public AppUser Recipient { get; set; }
 
